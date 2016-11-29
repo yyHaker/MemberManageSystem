@@ -321,7 +321,6 @@
 				</includes>
 				<filtering>true</filtering>
 			</resource>
-<<<<<<< HEAD:javaWebMaven/pom.xml
 			<!--  <resource>
 				<directory>src/main/resources</directory>
 				<includes>
@@ -330,8 +329,6 @@
 				</includes>
 				<filtering>true</filtering>
 			</resource>  -->
-=======
->>>>>>> origin/master:javaWebMaven/MemberManageSystem/pom.xml
 		</resources>
 
 		<plugins>
