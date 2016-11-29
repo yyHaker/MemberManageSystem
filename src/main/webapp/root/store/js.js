@@ -62,6 +62,7 @@ function addStore() {
         $('#address').attr("placeholder", "地址不能为空");
         $('#addressDiv').addClass('has-error');
         return;
+
     }
     if (store.managerId == null || store.managerId.trim() == "") {
         $('#managerId').attr("placeholder", "管理员ID不能为空");
@@ -80,6 +81,7 @@ function addStore() {
         success: function (data) {
             if (data.code == 1) {
                 alert("添加成功");
+                window.location.reload();
             } else {
                 $('#id').val(null);
                 $('#id').attr("placeholder", "该门店已经存在");
@@ -184,6 +186,7 @@ function deleteStore(id) {
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
             alert(data.message);
+            searchStore("search");
         }
     });
 }
@@ -244,6 +247,7 @@ function changeStore() {
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
             alert(data.message);
+            searchStore("search");
         }
     });
 }
@@ -307,6 +311,7 @@ function disableStore(id) {
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
             alert(data.message);
+            searchStore("search");
         }
     });
 }
