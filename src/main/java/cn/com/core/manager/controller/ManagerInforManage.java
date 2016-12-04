@@ -5,6 +5,8 @@ import cn.com.core.manager.request.ManagerJson;
 import cn.com.core.manager.request.ManagerPage;
 import cn.com.core.manager.service.ManagerService;
 import cn.com.core.manager.utils.BeanUtils;
+import cn.com.shiro.exception.UserExistException;
+import cn.com.shiro.service.UserService;
 import cn.thinking.common.response.MessageJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/Manager")
 public class ManagerInforManage {
+	@Autowired
+	private UserService userService;
     @Autowired
     private ManagerService managerService;
 
@@ -69,6 +73,12 @@ public class ManagerInforManage {
          if (managerExist!=null){
              return new MessageJson("failure");
          }
+         try {
+        	 userService.createUser(managerJson.getId(), managerJson.getPassword(), "manager");
+ 		} catch (UserExistException e) {
+ 			return new MessageJson("failure");
+ 		}
+         
           managerService.addNewManager(manager);
           return new MessageJson("success");
     }

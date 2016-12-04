@@ -1,10 +1,7 @@
 package cn.com.shiro.service;
 
-
-import java.util.Set;
-
-import cn.com.shiro.entity.User;
 import cn.com.shiro.entity.extend.UserExtend;
+import cn.com.shiro.exception.UserExistException;
 
 /**
  * <p>User: Zhang Kaitao
@@ -13,18 +10,12 @@ import cn.com.shiro.entity.extend.UserExtend;
  */
 public interface UserService {
 
-//    /**
-//     * 创建用户
-//     * @param user
-//     */
-//    public User createUser(User user);
-
-//    /**
-//     * 修改密码
-//     * @param userId
-//     * @param newPassword
-//     */
-//    public void changePassword(Long userId, String newPassword);
+    /**
+     * 修改密码
+     * @param userId
+     * @param newPassword
+     */
+    public void changePassword(String username, String newPassword);
 
 //    /**
 //     * 添加用户-角色关系
@@ -63,5 +54,7 @@ public interface UserService {
 //    public Set<String> findPermissions(String username);
 	
 	public UserExtend getUser(String username);
+
+	void createUser(String username, String password, String role) throws UserExistException;
 
 }

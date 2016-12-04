@@ -6,6 +6,8 @@ import cn.com.core.member.request.MemberJson;
 import cn.com.core.member.request.MemberPage;
 import cn.com.core.member.service.impl.MemberService;
 import cn.com.core.member.utils.BeanUtils;
+import cn.com.shiro.exception.UserExistException;
+import cn.com.shiro.service.UserService;
 import cn.thinking.common.baseeditor.BaseController;
 import cn.thinking.common.response.MessageJson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/Member")
 public class MemberInforManage extends BaseController {
-
+	@Autowired
+	private UserService userService;
     @Autowired
     private MemberService memberService;
 
@@ -76,8 +79,16 @@ public class MemberInforManage extends BaseController {
         if(memberExits != null){
             return new MessageJson("failure");
         }
+        
+
+        try {
+			userService.createUser(memberJson.getId(), memberJson.getPassword(), "member");
+		} catch (UserExistException e) {
+			return new MessageJson("failure");
+		}
         memberService.addNewMember(member);
         //添加会员密码信息，调用其他接口(MemberJson已经获得密码数据)
+        
         return new MessageJson("success");
     }
 

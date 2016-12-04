@@ -112,7 +112,6 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login.html" />
 		<property name="unauthorizedUrl" value="/root/user/user_list.html" />
-		<property name="successUrl" value="/root/user/index.html"></property>
 		<property name="filters">
 			<util:map>
 				<entry key="authc" value-ref="formAuthenticationFilter" />

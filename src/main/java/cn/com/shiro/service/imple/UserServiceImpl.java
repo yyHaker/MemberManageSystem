@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import cn.com.shiro.entity.Permission;
 import cn.com.shiro.entity.Role;
+import cn.com.shiro.entity.RoleExample;
 import cn.com.shiro.entity.RoleToPermissionExample;
 import cn.com.shiro.entity.RoleToPermissionKey;
 import cn.com.shiro.entity.User;
@@ -17,12 +17,14 @@ import cn.com.shiro.entity.UserExample;
 import cn.com.shiro.entity.UserToRoleExample;
 import cn.com.shiro.entity.UserToRoleKey;
 import cn.com.shiro.entity.extend.UserExtend;
+import cn.com.shiro.exception.UserExistException;
 import cn.com.shiro.mapper.PermissionMapper;
 import cn.com.shiro.mapper.RoleMapper;
 import cn.com.shiro.mapper.RoleToPermissionMapper;
 import cn.com.shiro.mapper.UserMapper;
 import cn.com.shiro.mapper.UserToRoleMapper;
 import cn.com.shiro.service.UserService;
+import cn.com.shiro.utils.PasswordHelper;
 
 /**
  * <p>User: Zhang Kaitao
@@ -71,9 +73,13 @@ public class UserServiceImpl implements UserService {
 		UserExample example = new UserExample();
 		example.createCriteria().andUsernameEqualTo(username);
 		
-		User user = userMapper.selectByExample(example).get(0);
+		List<User> users = userMapper.selectByExample(example);
 		
-		return user;
+		if (users.size() == 0) {
+			return null;
+		}else {
+			return users.get(0);
+		}
 	}
 	
 	private List<Role> findRoles(User user) {
@@ -113,4 +119,46 @@ public class UserServiceImpl implements UserService {
 		return permissions;
 	}
 
+	@Override
+	public void createUser(String username, String password, String roleName) throws UserExistException {
+		User user = this.findByUsername(username);
+		if (user != null) {
+			throw new UserExistException();
+		}
+		
+		user = new User();
+		user.setId(null);
+		user.setUsername(username);
+		user.setPassword(password);
+		
+		PasswordHelper.encryptPassword(user);
+		
+		userMapper.insert(user);
+		
+		Role role = this.findRoleByRoleName(roleName);
+		
+		UserToRoleKey key = new UserToRoleKey();
+		
+		user = this.findByUsername(username);
+		key.setUserId(user.getId());
+		key.setRoleId(role.getId());
+		
+		userToRoleMapper.insert(key);
+	}
+
+	@Override
+	public void changePassword(String username, String newPassword) {
+		User user = this.findByUsername(username);
+		user.setPassword(newPassword);
+		PasswordHelper.encryptPassword(user);
+		
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+	
+	private Role findRoleByRoleName(String roleName){
+		RoleExample example = new RoleExample();
+		example.createCriteria().andRoleEqualTo(roleName);
+		Role role = roleMapper.selectByExample(example).get(0);
+		return role;
+	}
 }
