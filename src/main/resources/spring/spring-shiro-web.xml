@@ -99,12 +99,12 @@
 
 	<!-- 基于Form表单的身份验证过滤器 -->
 	<bean id="formAuthenticationFilter"
-		class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+		class="cn.com.shiro.filter.MyFormAuthenticationFilter">
 		<property name="usernameParam" value="username" />
 		<property name="passwordParam" value="password" />
 		<property name="rememberMeParam" value="rememberMe"></property>
 		<property name="failureKeyAttribute" value="failureKeyAttribute"></property>
-		<property name="loginUrl" value="/login.html" />
+		<property name="loginUrl" value="/loginInner" />
 	</bean>
 
 	<!-- Shiro的Web过滤器 -->
@@ -112,7 +112,7 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login.html" />
 		<property name="unauthorizedUrl" value="/root/user/user_list.html" />
-		<property name="successUrl" value="/root/index.html"></property>
+		<property name="successUrl" value="/root/user/index.html"></property>
 		<property name="filters">
 			<util:map>
 				<entry key="authc" value-ref="formAuthenticationFilter" />
@@ -120,8 +120,17 @@
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
-				/login.html = authc
-				/root/** = user
+				/login.html = anon
+				/bootstrap/** = anon
+				/dist/** = anon
+				/plugins/** = anon
+				/utils/js.js = anon
+				/loginInner = authc
+				/root/** = roles[root]
+				/manager/** = roles[manager]
+				/member/** = roles[member]
+				/ = user
+				/logout = logout
 			</value>
 		</property>
 	</bean>
