@@ -14,6 +14,8 @@ public class MemberJson {
 
     private String password;
 
+    private String email;
+
     private String sex;
 
     private String birthday; //用字符串接收，后面在转换为java Date类型
@@ -46,30 +48,6 @@ public class MemberJson {
 
     private int pageNum;//分页数量
 
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getBeginPageIndex() {
-        return beginPageIndex;
-    }
-
-    public void setBeginPageIndex(int beginPageIndex) {
-        this.beginPageIndex = beginPageIndex;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
     public String getId() {
         return id;
     }
@@ -92,6 +70,14 @@ public class MemberJson {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSex() {
@@ -196,5 +182,29 @@ public class MemberJson {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public int getBeginPageIndex() {
+        return beginPageIndex;
+    }
+
+    public void setBeginPageIndex(int beginPageIndex) {
+        this.beginPageIndex = beginPageIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 }

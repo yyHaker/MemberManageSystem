@@ -11,6 +11,7 @@ import java.util.List;
  * @author Le Yuan
  * @date 2016/10/24
  */
+
 public class MemberPage {
     private List<MemberJson> memberJsonList;
     private PageInfo<Member> pageInfo;
@@ -39,3 +40,4 @@ public class MemberPage {
         this.pageInfo = pageInfo;
     }
 }
+

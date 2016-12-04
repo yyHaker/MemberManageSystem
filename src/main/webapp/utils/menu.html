@@ -2,6 +2,21 @@
 
     <ul class="sidebar-menu">
         <li class="header" style="text-align: center;"><b>主菜单</b></li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-plane"></i>
+                <span>门店管理员管理</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="" id="managerAdd"><i class="fa fa-user-plus"></i>门店管理员添加</a></li>
+                <li><a href=""  id="managerList"><i class="fa fa-users"></i> 门店管理员查询</a></li>
+            </ul>
+        </li>
+
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-user"></i>
@@ -29,6 +44,7 @@
                 <li><a href=""  id="storeList"><i class="fa fa-users"></i> 门店查询</a></li>
             </ul>
         </li>
+
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-plane"></i>
@@ -42,9 +58,12 @@
                 <li><a href=""  id="cabinList"><i class="fa fa-users"></i> 飞行舱查询</a></li>
             </ul>
         </li>
+
     </ul>
 </section>
 <script>
+    $("#managerAdd").attr("href", path + "/root/manager/manager_add.html");
+    $("#managerList").attr("href", path + "/root/manager/manager_list.html");
     $("#memberAdd").attr("href", path + "/root/user/user_add.html");
     $("#memberList").attr("href", path + "/root/user/user_list.html");
     $("#storeAdd").attr("href", path + "/root/store/store_add.html");

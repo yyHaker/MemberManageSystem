@@ -1,19 +1,12 @@
 package cn.com.core.cabin.controller;
 
 import cn.com.core.cabin.entity.Cabin;
-import cn.com.core.cabin.mapper.CabinMapper;
 import cn.com.core.cabin.request.CabinJson;
 import cn.com.core.cabin.request.CabinPage;
 import cn.com.core.cabin.service.CabinService;
 import cn.com.core.cabin.utils.BeanUtils;
-import cn.com.core.member.entity.Member;
-import cn.com.core.member.utils.GenerateDataHelper;
-import cn.thinking.common.response.FailJson;
 import cn.thinking.common.response.MessageJson;
-import cn.thinking.common.response.ResponseInfor;
-import cn.thinking.common.response.SuccessJson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +77,9 @@ public class CabinInforManage {
     @ResponseBody
     @RequestMapping(value="/updateCabin",method = RequestMethod.POST)
       public MessageJson updateOldCabin(@RequestBody CabinJson cabinJson){
+          int changeCount=0;
          Cabin cabin=BeanUtils.toCabin(cabinJson);
-         int changeCount=cabinService.updateOldCabin(cabin);
+          changeCount=cabinService.updateOldCabin(cabin);
          if (changeCount==1){
              return new MessageJson("success");
          }else {

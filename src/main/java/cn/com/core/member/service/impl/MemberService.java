@@ -19,33 +19,37 @@ import java.util.List;
  * @author Le Yuan
  * @date 2016/10/21
  */
+
 @Component
 public class MemberService {
     @Resource  private MemberMapper memberMapper;
 
-    /**
+  /**
      * 根据主键id得到member对象
      * @param id
      * @return
      */
+
     public Member getMemberById(String id){
         return memberMapper.selectByPrimaryKey(id);
     }
 
-    /**
+/**
      * 根据主键id删除member
      * @param id
      * @return
      */
+
     public int deleteMemberById(String id){
          return memberMapper.deleteByPrimaryKey(id);
     }
 
-    /**
+/**
      * 根据组合条件查询会员
      * @param member
      * @return
      */
+
     public MemberPage searchMembersListPage(Member member, int beginPageIndex, int pageSize){
         MemberExample memberExample=new MemberExample();
         MemberExample.Criteria criteria=memberExample.createCriteria();
@@ -102,11 +106,12 @@ public class MemberService {
         return  new MemberPage(BeanUtils.toMemberJsonList(memberList),memberPageInfo);
     }
 
-    /**
+/**
      * 添加和会员
      * @param member
      * @return
      */
+
     public int  addNewMember(Member member){
          int changeCount=0;
          if (member!=null){
@@ -125,11 +130,12 @@ public class MemberService {
          return changeCount;
     }
 
-    /**
+/**
      * 根据条件修改Member
      * @param member
      * @return
      */
+
     public int  updateOldMember(Member member){
           int  changeCount=0;
         if (member.getId()!=null){

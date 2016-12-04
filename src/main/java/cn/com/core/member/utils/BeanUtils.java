@@ -1,6 +1,5 @@
 package cn.com.core.member.utils;
 
-import cn.com.core.member.request.MemberJson;
 import cn.com.core.member.entity.Member;
 import cn.com.core.member.request.MemberJson;
 import cn.thinking.common.util.Tools;
@@ -14,8 +13,9 @@ import java.util.List;
  * @author Le Yuan
  * @date 2016/10/22
  */
+
 public class BeanUtils {
-    /**
+/**
      * 将MemberJson对象转换成Member对象
      * @param memberJson
      * @return
@@ -28,8 +28,8 @@ public class BeanUtils {
         if (memberJson.getUsername()!=null&&memberJson.getUsername()!=""){
             member.setUsername(memberJson.getUsername());
         }
-        if (memberJson.getPassword()!=null&&memberJson.getPassword()!=""){
-            member.setPassword(memberJson.getPassword());
+        if (memberJson.getEmail()!=null&&memberJson.getEmail()!=""){
+            member.setEmail(memberJson.getEmail());
         }
         if (memberJson.getStoreId()!=null&&memberJson.getStoreId()!=""){
             member.setStoreId(memberJson.getStoreId());
@@ -46,17 +46,18 @@ public class BeanUtils {
         return  member;
     }
 
-    /**
+/**
      * 将Member对象转换成MemberJson
      * @param member
      * @return
      */
+
     public static  MemberJson toMemberJson(Member member){
         MemberJson memberJson=new MemberJson();
 
         memberJson.setId(member.getId());
         memberJson.setUsername(member.getUsername());
-        memberJson.setPassword(member.getPassword());
+        memberJson.setEmail(member.getEmail());
         memberJson.setSex(member.getSex());
         memberJson.setBirthday(Tools.date2Str(member.getBirthday(),"yyyy-MM-dd"));
         memberJson.setTelephone(member.getTelephone());
@@ -75,11 +76,12 @@ public class BeanUtils {
         return memberJson;
     }
 
-    /**
+/**
      * 将List<Member>转换成List<MemberJson>
      * @param memberList
      * @return
      */
+
     public static List<MemberJson> toMemberJsonList(List<Member> memberList){
         List<MemberJson> memberJsonList=new ArrayList<MemberJson>();
         for (Member member:memberList){

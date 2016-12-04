@@ -9,7 +9,7 @@
 var currentPage = 1;
 var pageSize = 10;
 
-/*主页地址http://localhost:8089/mms/cabin/cabin_list.html*/
+/*主页地址http://localhost:8089/mms/cabin/manager_list.html*/
 /**
  * 添加用户，前端传递用户类JOSN，后台不需要返回值
  * url: "/user/add",

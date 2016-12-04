@@ -9,7 +9,7 @@
 var currentPage = 1;
 var pageSize = 10;
 
-/*主页地址http://localhost:8089/MemberManageSystem/user/user_list.html*/
+/*主页地址http://localhost:8089/mms/user/user_list.html*/
 /**
  * 添加用户，前端传递用户类JOSN，后台不需要返回值
  * url: "/user/add",
@@ -67,22 +67,28 @@ function addUser() {
         $('#storeIdDiv').addClass('has-error');
         return;
     }
+
     /**
      * 添加会员
      */
     $.ajax({
         type: "post",
         url: path + "/Member/addNewMember",
+        dataType :"json",
         data: JSON.stringify(member),
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
-            if (data == null || data == "") {
+            if (data.msg=="success") {
                 alert("添加用户成功");
+                window.location.reload();
             } else {
                 $('#id').val(null);
                 $('#id').attr("placeholder", "该用户已经存在");
                 $('#idDiv').addClass('has-error');
             }
+        },
+        error:function (data) {
+             alert("添加用户失败");
         }
     });
 }
@@ -176,10 +182,20 @@ function changeTable(data, userDetailBody) {
  */
 function deleteUser() {
     $.ajax({
-        type: "post",
+        type: "get",
         url: path + "/Member/deleteMember/" + $('#idDialog').val(),
-        success: function () {
-            alert("删除用户成功");
+        contentType: "application/json; charset=UTF-8",
+        dataType: "json",
+        success: function (data) {
+              if(data.msg=="success"){
+                  alert("删除用户成功");
+              }else {
+                  alert("删除用户失败");
+              }
+             searchUser("current");
+        },
+        error:function (data) {
+              alert("删除用户失败");
             searchUser("current");
         }
     });

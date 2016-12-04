@@ -152,4 +152,11 @@ public class StoreController {
         Store store = storeService.getStore(request.getStoreId());
         return store;
     }
+
+        @RequestMapping("/addData")
+         public void addData() {
+          for (int i = 2; i <=100; i++) {
+
+          }
+      }
 }

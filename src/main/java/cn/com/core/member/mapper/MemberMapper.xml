@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.com.core.member.entity.Member" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
@@ -78,7 +78,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, password, sex, birthday, telephone, storeId, level, points, flightCount, 
+    id, username, email, sex, birthday, telephone, storeId, level, points, flightCount, 
     lastVisitedTime, flightTime, consumptionSum, balance, createTime, updateTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.core.member.entity.MemberExample" >
@@ -113,13 +113,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.com.core.member.entity.Member" >
-    insert into hy_memeber (id, username, password, 
+    insert into hy_memeber (id, username, email, 
       sex, birthday, telephone, 
       storeId, level, points, 
       flightCount, lastVisitedTime, flightTime, 
       consumptionSum, balance, createTime, 
       updateTime)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR}, 
       #{storeId,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, 
       #{flightCount,jdbcType=INTEGER}, #{lastVisitedTime,jdbcType=DATE}, #{flightTime,jdbcType=INTEGER}, 
@@ -135,8 +135,8 @@
       <if test="username != null" >
         username,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="email != null" >
+        email,
       </if>
       <if test="sex != null" >
         sex,
@@ -185,8 +185,8 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=VARCHAR},
@@ -244,8 +244,8 @@
       <if test="record.username != null" >
         username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
       </if>
       <if test="record.sex != null" >
         sex = #{record.sex,jdbcType=VARCHAR},
@@ -295,7 +295,7 @@
     update hy_memeber
     set id = #{record.id,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=DATE},
       telephone = #{record.telephone,jdbcType=VARCHAR},
@@ -319,8 +319,8 @@
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=VARCHAR},
@@ -367,7 +367,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.com.core.member.entity.Member" >
     update hy_memeber
     set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
       telephone = #{telephone,jdbcType=VARCHAR},

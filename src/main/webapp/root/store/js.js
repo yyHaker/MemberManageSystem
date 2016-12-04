@@ -294,6 +294,7 @@ function enableStore(id) {
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
             alert(data.message);
+            searchStore("search");
         }
     });
 }
