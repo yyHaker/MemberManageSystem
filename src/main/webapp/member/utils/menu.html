@@ -1,0 +1,22 @@
+<section class="sidebar">
+
+    <ul class="sidebar-menu">
+        <li class="header" style="text-align: center;"><b>主菜单</b></li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span>个人信息管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="" id="memberList"><i class="fa fa-user-plus"></i> 基本信息管理</a></li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<script>
+    $("#memberList").attr("href", path + "/member/member/memberProfile.html");
+</script>

@@ -79,7 +79,6 @@ public class MemberInforManage extends BaseController {
         if(memberExits != null){
             return new MessageJson("failure");
         }
-        
 
         try {
 			userService.createUser(memberJson.getId(), memberJson.getPassword(), "member");

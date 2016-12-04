@@ -15,83 +15,6 @@ var pageSize = 10;
  * url: "/user/add",
  * "{"id":"a","username":"a","password":"a","passwordConform":"a","sex":"male","birthday":"09-02-2012","telephone":"a"}"
  */
-function addUser() {
-    var member = serializeJson("#addUserForm");
-    member.password = $('#password').val();
-    $('#id').attr("placeholder", "会员ID");
-    $('#idDiv').removeClass('has-error');
-
-    $('#password').attr("placeholder", "密码");
-    $('#passwordDiv').removeClass('has-error');
-
-    $('#passwordConfirm').attr("placeholder", "密码确认");
-    $('#passwordConfirmDiv').removeClass('has-error');
-
-    $('#username').attr("placeholder", "姓名");
-    $('#usernameDiv').removeClass('has-error');
-
-    $('#storeId').attr("placeholder", "门店ID");
-    $('#storeIdDiv').removeClass('has-error');
-
-    $('#telephone').attr("placeholder", "电话");
-    $('#telephoneDiv').removeClass('has-error');
-
-    if (member.id == null || member.id.trim() == "") {
-        $('#id').attr("placeholder", "会员ID不能为空");
-        $('#idDiv').addClass('has-error');
-        return;
-    }
-    if (member.username == null || member.username.trim() == "") {
-        $('#username').attr("placeholder", "姓名不能为空");
-        $('#usernameDiv').addClass('has-error');
-        return;
-    }
-    if (member.password == null || member.password.trim() == "") {
-        $('#password').attr("placeholder", "密码不能为空");
-        $('#passwordDiv').addClass('has-error');
-        return;
-    }
-    if ($('#passwordConfirm').val() != member.password) {
-        $('#passwordConfirm').val(null);
-        $('#passwordConfirm').attr("placeholder", "两次密码不一致");
-        $('#passwordConfirmDiv').addClass('has-error');
-        return;
-    }
-    if (member.telephone == null || member.telephone.trim() == "") {
-        $('#telephone').attr("placeholder", "电话不能为空");
-        $('#telephoneDiv').addClass('has-error');
-        return;
-    }
-    if (member.storeId == null || member.storeId.trim() == "") {
-        $('#storeId').attr("placeholder", "门店ID不能为空");
-        $('#storeIdDiv').addClass('has-error');
-        return;
-    }
-
-    /**
-     * 添加会员
-     */
-    $.ajax({
-        type: "post",
-        url: path + "/Member/addNewMember",
-        dataType :"json",
-        data: JSON.stringify(member),
-        contentType: "application/json; charset=UTF-8",
-        success: function (data) {
-            if (data.msg=="success") {
-                alert("添加用户成功");
-                window.location.reload();
-            } else {
-                $('#id').val(null);
-                $('#id').attr("placeholder", "该用户已经存在");
-                $('#idDiv').addClass('has-error');
-            }
-        },
-        error:function (data) {
-             alert("添加用户失败");
-        }
-    });
-}
 
 /**
  * 查询接口，后台返回List<Member>注意日期格式转换
@@ -112,6 +35,7 @@ function searchUser(flag) {
         member.beginPageIndex = flag;
     }
     member.pageSize = pageSize;
+    member.id=userId;
 
     $.ajax({
         type: "post",
@@ -176,39 +100,15 @@ function changeTable(data, userDetailBody) {
 
     $(userDetailBody).html(html);
 }
-/**
- * 删除Restful格式
- * @param id
- */
-function deleteUser() {
-    $.ajax({
-        type: "get",
-        url: path + "/Member/deleteMember/" + $('#idDialog').val(),
-        contentType: "application/json; charset=UTF-8",
-        dataType: "json",
-        success: function (data) {
-              if(data.msg=="success"){
-                  alert("删除用户成功");
-              }else {
-                  alert("删除用户失败");
-              }
-             searchUser("current");
-        },
-        error:function (data) {
-              alert("删除用户失败");
-            searchUser("current");
-        }
-    });
-}
 
 /**
- * 查询接口
+ * 更改接口
  * 前台传递Member类
  * "{"id":"a","username":"a","sex":"male","birthday":"08-02-2012","telephone":"a"}"
  */
 function changeUser() {
-    var member = serializeJson("#changeUserForm");
-    member.id = $('#idDialog').val();
+    var member = serializeJson("#userInformationForm");
+    member.id = $('#id').val();
 
     $('#usernameDialog').attr("placeholder", "姓名");
     $('#usernameDialogDiv').removeClass('has-error');
@@ -228,8 +128,14 @@ function changeUser() {
         return;
     }
     /**
-     * 更该用户信息
+     * 更该用户信息，只能提交id、姓名、性别、电话、生日
      */
+       member.level="";
+       member.flightCount="";
+       member.lastVisitedTime="";
+       member.flightTime="";
+      member.consumptionSum="";
+      member.balance="";
 
     $.ajax({
         type: "post",
@@ -237,7 +143,11 @@ function changeUser() {
         data: JSON.stringify(member),
         contentType: "application/json; charset=UTF-8",
         success: function (data) {
-                alert("更改用户成功!");
+               if(data.msg=="success"){
+                   alert("更改信息成功!");
+               }else{
+                   alert("更改信息失败")
+               }
                 searchUser("current");
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -246,12 +156,10 @@ function changeUser() {
             alert(XMLHttpRequest.status);
             alert(XMLHttpRequest.readyState);
             alert(textStatus); // parser error;*/
-            alert("更改用户失败");
+            alert("更改信息失败");
             searchUser("current");
         }
-
     });
-
 }
 /**
  * 按照ID查询用户restful格式
@@ -262,11 +170,20 @@ function getMember(id) {
         type: "post",
         url: path + "/Member/getMember/" + id,
         success: function (data) {
-            $('#idDialog').val(data.id);
-            $('#usernameDialog').val(data.username);
-            $('#datepicker').val(data.birthday);
-            $('#telephoneDialog').val(data.telephone);
-            $('#timeDetail').html("创建时间:" + data.createTime + "<br/>更新时间:" + data.updateTime);
+            $('#id').val(data.id);
+            $('#username').val(data.username);
+            $('#email').val(data.email);
+            $('#birthday').val(data.birthday);
+            $('#telephone').val(data.telephone);
+            $('#storeId').val(data.storeId);
+            $('#level').val(data.level);
+            $('#flightCount').val(data.flightCount);
+            $('#lastVisitedTime').val(data.lastVisitedTime);
+            $('#flightTime').val(data.flightTime);
+            $('#consumptionSum').val(data.consumptionSum);
+            $('#balance').val(data.balance);
+
+           // $('#timeDetail').html("创建时间:" + data.createTime + "<br/>更新时间:" + data.updateTime);
 
             if (data.sex == "男") {
                 $("#sexFemaleInputLabel").html('<input type="radio" name="sex" id="sexFemaleDialog" value="女"> 女');
@@ -278,3 +195,46 @@ function getMember(id) {
         }
     });
 }
+
+function  changePassword(){
+
+
+
+    $('#passwordConfirmDiv').removeClass('has-error');
+    var member = serializeJson("#passwordForm");
+    member.password = $('#password').val();
+    if (member.password == null || member.password.trim() == "") {
+        $('#password').attr("placeholder", "密码不能为空");
+        $('#passwordDiv').addClass('has-error');
+        return;
+    }
+    if ($('#passwordConfirm').val() != member.password) {
+        $('#passwordConfirm').val(null);
+        $('#passwordConfirm').attr("placeholder", "两次密码不一致");
+        $('#passwordConfirmDiv').addClass('has-error');
+        return;
+    }
+
+    var user={};
+   // alert($('#id').val());
+    user.username=$('#id').val();
+    user.password=member.password;
+    $.ajax({
+        type: "post",
+        url: path + "/changepassword",
+        dataType: "json",
+        data: JSON.stringify(user),
+        contentType: "application/json; charset=UTF-8",
+        success: function (data) {
+            if(data.code==1){
+                alert("修改密码成功");
+            }else {
+                alert("修改密码失败");
+            }
+        },
+        error:function (data) {
+            alert("修改密码失败");
+        }
+    });
+}
+
