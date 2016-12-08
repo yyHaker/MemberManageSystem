@@ -1,0 +1,36 @@
+<section class="sidebar">
+
+    <ul class="sidebar-menu">
+        <li class="header" style="text-align: center;"><b>主菜单</b></li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span>会员管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="" id="memberAdd"><i class="fa fa-user-plus"></i> 会员添加</a></li>
+                <li><a href=""  id="memberList"><i class="fa fa-users"></i> 会员查询</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span>个人信息管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="" id="profile"><i class="fa fa-user-plus"></i> 个人信息修改</a></li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<script>
+    $("#memberAdd").attr("href", path + "/manager/user/user_add.html");
+    $("#memberList").attr("href", path + "/manager/user/user_list.html");
+    $("#profile").attr("href", path + "/manager/profile.html");
+</script>
